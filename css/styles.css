@@ -1,3 +1,53 @@
-h2 {
-    color: red;
-}
+html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+  }  
+  /*@media only screen and (max-width:768px){*/
+
+  #navbar-principal {
+      background-color: black;
+  }
+ 
+  #navbar-principal ul li a {
+      color: white;
+  }
+
+  #dropdown-menu {
+      background-color: black;
+  }
+
+  #navbar-principal ul li a:hover {
+    background-color: #00b8e4;
+  }
+
+  #navbar-principal ul li:hover > ul {
+    display: block;
+  }
+  
+  #navbar-principal ul li:hover {
+     background-color: rgba(0, 184, 288, 1);
+  }
+
+ 
+/*}*/
