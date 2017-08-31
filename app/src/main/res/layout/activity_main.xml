@@ -1,18 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.melodicmusic.mobileapp.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal"
+                android:id="@+id/linearLayout1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center">
+
+                <ImageButton
+                    android:paddingLeft="10dp"
+                    android:id="@+id/menuButton"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    app:srcCompat="@drawable/menu" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="220dp"
+                    android:layout_height="46dp"
+                    app:srcCompat="@drawable/logo" />
+
+                <ImageButton
+                    android:id="@+id/searchButton"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:paddingRight="20dp"
+                    app:srcCompat="@drawable/lupa"
+                    />
+                <ImageButton
+                    android:id="@+id/cartButton"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    app:srcCompat="@drawable/cart" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gridLayout2"
+                android:background="#FFF"
+                android:layout_below="@+id/linearLayout1"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                android:horizontalSpacing="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#000"
+                    android:text="No ha iniciado sessión" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="110dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:textAllCaps="false"
+                    android:text="Iniciar Sesión"
+                    android:background="#FBA919"/>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#0000cc"
+                    android:text="Crear una cuenta" />
+            </LinearLayout>
+
+            <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/viewPager"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_below="@+id/gridLayout2"
+                android:paddingBottom="20dp">
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gridLayout3"
+                android:background="#a00d17"
+                android:layout_below="@+id/viewPager"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/imageWind"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    app:srcCompat="@drawable/viento"/>
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="#000"
+                    android:text="Viento" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="#000"
+                    android:text="Los instrumentos de viento o aerófonos son una familia que producen el sonido por la vibración del viento y de la masa de aire en su interior"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gridLayout4"
+                android:background="#a00d17"
+                android:layout_below="@+id/viewPager"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/imageStrings"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    app:srcCompat="@drawable/violin"/>
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="#000"
+                    android:text="Cuerdas" />
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="#000"
+                    android:text="Los instrumentos de cuerda o cordófonos son instrumentos musicales que producen sonidos por medio de las vibraciones de una o más cuerdas, usualmente amplificadas por medio de una caja de resonancia."/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gridLayout5"
+                android:background="#a00d17"
+                android:layout_below="@+id/viewPager"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/imageDrums"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    app:srcCompat="@drawable/percusion"/>
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="#000"
+                    android:text="Percusión" />
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="#000"
+                    android:text="Un instrumento de percusión es un tipo de instrumento musical cuyo sonido se origina al ser golpeado o agitado. Es, quizá, la forma más antigua de instrumento musical."/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gridLayout6"
+                android:background="#a00d17"
+                android:layout_below="@+id/viewPager"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/imageElectric"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    app:srcCompat="@drawable/electricas"/>
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:textColor="#000"
+                    android:text="Electrónicos" />
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="#000"
+                    android:text="Un instrumento electrónico es un instrumento musical que produce sonidos usando la electrónica (energía eléctrica)."/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
