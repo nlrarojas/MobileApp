@@ -125,14 +125,6 @@ public class NoLoginStartPageFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void loginBtnAction(View v){
-        //Redireccionar a la página de inicio de sessión
-    }
-
-    public void createAcountBtnAction(View v){
-        //Redireccionar a la página de registro
-    }
-
     public ViewPager getViewPager() {
         return viewPager;
     }

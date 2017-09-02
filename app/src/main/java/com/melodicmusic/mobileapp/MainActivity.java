@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.melodicmusic.mobileapp.utility.IConstants;
+import com.melodicmusic.mobileapp.view.CreateAcountFragment;
+import com.melodicmusic.mobileapp.view.LoginFragment;
 import com.melodicmusic.mobileapp.view.NoLoginStartPageFragment;
 import com.melodicmusic.mobileapp.view.PrincipalPage;
 import com.melodicmusic.mobileapp.view.SearchFragment;
@@ -27,7 +29,8 @@ import com.melodicmusic.pruebas.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoLoginStartPageFragment.OnFragmentInteractionListener,
-        PrincipalPage.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener, IConstants {
+        PrincipalPage.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener,
+        LoginFragment.OnFragmentInteractionListener, CreateAcountFragment.OnFragmentInteractionListener, IConstants {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -51,9 +54,11 @@ public class MainActivity extends AppCompatActivity
         sharedPreferences = getSharedPreferences(LOGIN_SAVED_PREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        if(sharedPreferences.getBoolean(IS_LOGIN, true)){
-            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new PrincipalPage()).commit();
-        }else{
+        if(sharedPreferences.getInt(SELECT_FORM_ENTER, 1) == 1){
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new LoginFragment()).commit();
+        } else if (sharedPreferences.getInt(SELECT_FORM_ENTER, 2) == 2){
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new CreateAcountFragment()).commit();
+        } else if (sharedPreferences.getInt(SELECT_FORM_ENTER, 3) == 3) {
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new NoLoginStartPageFragment()).commit();
         }
     }
@@ -157,6 +162,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getProductsByBrand(View view){
+
+    }
+
+    public void loginBtnRedirect(View v){
+        //Redireccionar a la página de inicio de sessión
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new LoginFragment()).commit();
+    }
+
+    public void createAcountBtnRedirect(View v){
+        //Redireccionar a la página de registro
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new CreateAcountFragment()).commit();
+    }
+
+    public void loginBtnAction(View view){
+
+    }
+
+    public void createAcountBtnAction(View view){
 
     }
 }

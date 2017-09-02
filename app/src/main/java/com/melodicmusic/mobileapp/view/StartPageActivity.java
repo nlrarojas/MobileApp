@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.melodicmusic.mobileapp.MainActivity;
+import com.melodicmusic.mobileapp.controller.WebServicesConsumer;
 import com.melodicmusic.pruebas.R;
 import com.melodicmusic.mobileapp.utility.IConstants;
 
@@ -17,6 +18,7 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
     private Button noLoginBtn, loginBtn, createAcount;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private WebServicesConsumer web;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
         sharedPreferences = getSharedPreferences(LOGIN_SAVED_PREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        editor.putBoolean(ACTIVITY_EXECUTED, false);
+        editor.commit();
         if(sharedPreferences.getBoolean(ACTIVITY_EXECUTED, true)){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -39,27 +43,26 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
             loginBtn.setOnClickListener(this);
             createAcount.setOnClickListener(this);
         }
+
+
     }
 
     @Override
     public void onClick(View v) {
-        if((Button)v == noLoginBtn) {
-            editor.putBoolean(ACTIVITY_EXECUTED, true);
-            editor.putBoolean(IS_LOGIN, false);
+        if ((Button) v == loginBtn) {
+            editor.putInt(SELECT_FORM_ENTER, 1);
             editor.commit();
-
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } else if ((Button) v == loginBtn) {
-            editor.putBoolean(ACTIVITY_EXECUTED, true);
-            editor.putBoolean(IS_LOGIN, true);
-            editor.commit();
-
             //Cambiar este intent por el activity de login
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
         } else if ((Button) v == createAcount){
             //Implementar el intent de registrar cuenta
+            editor.putInt(SELECT_FORM_ENTER, 2);
+            editor.commit();
+        } else if((Button)v == noLoginBtn) {
+            editor.putBoolean(ACTIVITY_EXECUTED, true);
+            editor.putInt(SELECT_FORM_ENTER, 3);
+            editor.commit();
         }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

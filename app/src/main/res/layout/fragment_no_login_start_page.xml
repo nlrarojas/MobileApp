@@ -38,17 +38,17 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:background="#FBA919"
+                    android:onClick="loginBtnRedirect"
                     android:text="Iniciar Sesión"
-                    android:onClick="loginBtnAction"
                     android:textAllCaps="false" />
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:onClick="createAcountBtnAction"
                     android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="createAcountBtnRedirect"
                     android:text="Crear una cuenta"
                     android:textColor="#0000cc" />
             </LinearLayout>
