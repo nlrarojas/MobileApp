@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity
 
         User newUser = new User(userName.getText().toString(), userLastName.getText().toString(), userEmail.getText().toString(), passwordName.getText().toString(), "client");
 
+        editor.putString(USER_ID, newUser.getId());
         editor.putString(NAME, newUser.getName() + " " + newUser.getLastName());
         editor.putString(EMAIL, newUser.getEmail());
         editor.putString(ROLE, newUser.getRole());
