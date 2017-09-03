@@ -1,5 +1,7 @@
 package com.melodicmusic.mobileapp.controller;
 
+import android.app.Activity;
+
 import com.melodicmusic.mobileapp.model.User;
 import com.melodicmusic.mobileapp.utility.IConstants;
 
@@ -12,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Observable;
+import java.util.Observer;
 
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpResponse;
@@ -26,29 +30,51 @@ import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
  */
 
 public class WebServicesConsumer  implements IConstants{
+    private PostRequestWebServicesConsumer postSender;
+    private Activity mainActivity;
 
-    public WebServicesConsumer() {
-
+    public WebServicesConsumer(Activity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     private InputStream requestContent(String URIAppend, String values) {
-        HttpClient httpclient = new DefaultHttpClient();
-        String result = null;
-        HttpGet httpget = new HttpGet(URI + URIAppend + values);
-        HttpResponse response;
         InputStream instream = null;
-
         try {
+            HttpClient httpclient = new DefaultHttpClient();
+            String result = null;
+            HttpGet httpget = new HttpGet(URI + URIAppend + values);
+            HttpResponse response;
+
             response = httpclient.execute(httpget);
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 instream = entity.getContent();
-                result = convertStreamToString(instream);
-                System.out.println(result);
             }
-        } catch (ClientProtocolException e) {
+        } catch (ClientProtocolException | IllegalArgumentException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return instream;
+    }
+
+    public User validateIfUserExists(String URIAppend, String values){
+        User userFound = null;
+        InputStream instream = requestContent(URIAppend, values);
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
+            StringBuilder sb = new StringBuilder();
+            String queryResult;
+
+            queryResult = reader.readLine();
+            JSONObject user = new JSONObject(queryResult);
+            userFound = new User(user.getString("_id"), user.getString("name"), user.getString("lastName"), user.getString("email"), user.getString("role"));
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         } finally {
             if (instream != null) {
@@ -59,64 +85,25 @@ public class WebServicesConsumer  implements IConstants{
                 }
             }
         }
-        return instream;
-    }
-
-    public User validateIfUserExists(String URIAppend, String values){
-        User userFound = null;
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(requestContent(URIAppend, values), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            String line;
-
-            line = reader.readLine();
-            JSONArray users = new JSONArray(line);
-            for (int i = 0; i < users.length(); i++) {
-                JSONObject user = users.getJSONObject(i);
-                System.out.println(user.toString());
-                userFound = new User(user.getString("name"), user.getString("lastName"), user.getString("email"), user.getString("role"));
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return userFound;
     }
 
-    public String convertStreamToString(InputStream is) throws UnsupportedEncodingException {
-        String line = "";
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-        StringBuilder sb = new StringBuilder();
+    public boolean registerUser(User user){
+        JSONObject userJSONObject = new JSONObject();
         try {
-            line = reader.readLine();
-            JSONArray users = new JSONArray(line);
-            for (int i = 0; i < users.length(); i++) {
-                JSONObject user = users.getJSONObject(i);
-                System.out.println(user.toString());
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            userJSONObject.put(NAME, user.getName());
+            userJSONObject.put(LAST_NAME, user.getLastName());
+            userJSONObject.put(EMAIL, user.getEmail());
+            userJSONObject.put(PASSWORD, user.getPassword());
+            userJSONObject.put(ROLE, user.getRole());
+            System.out.println("JSON Object creado");
+            postSender = new PostRequestWebServicesConsumer(userJSONObject);
+            postSender.addObserver((Observer) mainActivity);
+            postSender.run();
+            return true;
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
-
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-
-            }
-        }
-        return sb.toString();
     }
 }

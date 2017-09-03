@@ -16,9 +16,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.melodicmusic.mobileapp.controller.PostRequestWebServicesConsumer;
 import com.melodicmusic.mobileapp.controller.WebServicesConsumer;
+import com.melodicmusic.mobileapp.model.User;
 import com.melodicmusic.mobileapp.utility.IConstants;
 import com.melodicmusic.mobileapp.view.CreateAcountFragment;
 import com.melodicmusic.mobileapp.view.LoginFragment;
@@ -28,17 +31,20 @@ import com.melodicmusic.mobileapp.view.SearchFragment;
 import com.melodicmusic.mobileapp.view.StartPageActivity;
 import com.melodicmusic.pruebas.R;
 
+import java.util.Observable;
+import java.util.Observer;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoLoginStartPageFragment.OnFragmentInteractionListener,
         PrincipalPage.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener,
-        LoginFragment.OnFragmentInteractionListener, CreateAcountFragment.OnFragmentInteractionListener, IConstants {
+        LoginFragment.OnFragmentInteractionListener, CreateAcountFragment.OnFragmentInteractionListener, IConstants, Observer {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private WebServicesConsumer web;
 
     //View's components
-    private EditText userName, passwordName;
+    private EditText userName, passwordName, userLastName, userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +65,18 @@ public class MainActivity extends AppCompatActivity
         sharedPreferences = getSharedPreferences(LOGIN_SAVED_PREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        web = new WebServicesConsumer();
+        web = new WebServicesConsumer(this);
 
-        if(sharedPreferences.getInt(SELECT_FORM_ENTER, 1) == 1){
-            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new LoginFragment()).commit();
-        } else if (sharedPreferences.getInt(SELECT_FORM_ENTER, 2) == 2){
-            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new CreateAcountFragment()).commit();
-        } else if (sharedPreferences.getInt(SELECT_FORM_ENTER, 3) == 3) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new NoLoginStartPageFragment()).commit();
+        if(sharedPreferences.getBoolean(IS_LOGIN, true)) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new PrincipalPage()).commit();
+        } else {
+            if (sharedPreferences.getInt(SELECT_FORM_ENTER, 1) == 1) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new LoginFragment()).commit();
+            } else if (sharedPreferences.getInt(SELECT_FORM_ENTER, 2) == 2) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new CreateAcountFragment()).commit();
+            } else if (sharedPreferences.getInt(SELECT_FORM_ENTER, 3) == 3) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new NoLoginStartPageFragment()).commit();
+            }
         }
     }
 
@@ -102,9 +112,13 @@ public class MainActivity extends AppCompatActivity
             if(sharedPreferences.getBoolean(IS_LOGIN, true)){
                 editor.putBoolean(IS_LOGIN, false);
                 editor.putBoolean(ACTIVITY_EXECUTED, false);
+                editor.remove(NAME);
+                editor.remove(EMAIL);
+                editor.remove(ROLE);
                 editor.commit();
                 Intent intent = new Intent(this, StartPageActivity.class);
                 startActivity(intent);
+                finish();
             }else{
                 Snackbar mySnackbar = Snackbar.make(findViewById(R.id.contenedor), R.string.no_log_in, Snackbar.LENGTH_SHORT);
                 mySnackbar.show();
@@ -119,12 +133,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = new NoLoginStartPageFragment();
+        Fragment fragment = null;
         if(id == R.id.nav_home){
             if(sharedPreferences.getBoolean(IS_LOGIN, true)){
-                getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new PrincipalPage()).commit();
+                fragment = new PrincipalPage();
             }else{
-                getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new NoLoginStartPageFragment()).commit();
+                fragment = new NoLoginStartPageFragment();
             }
         } else if (id == R.id.nav_search) {
             fragment = new SearchFragment();
@@ -186,10 +200,54 @@ public class MainActivity extends AppCompatActivity
         userName = (EditText) findViewById(R.id.etUsername);
         passwordName = (EditText) findViewById(R.id.etPassword);
 
-        web.requestContent(URI_LOGIN, userName.getText() + "/" + passwordName.getText());
+        User user = web.validateIfUserExists(URI_LOGIN, userName.getText() + "/" + passwordName.getText());
+        if(user != null){
+            editor.putBoolean(ACTIVITY_EXECUTED, true);
+            editor.putBoolean(IS_LOGIN, true);
+            editor.putString(NAME, user.getName() + " " + user.getLastName());
+            editor.putString(EMAIL, user.getEmail());
+            editor.putString(ROLE, user.getRole());
+            editor.commit();
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new PrincipalPage()).commit();
+        }else{
+            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.contenedor), R.string.error_login, Snackbar.LENGTH_SHORT);
+            mySnackbar.show();
+        }
+        InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     public void createAcountBtnAction(View view){
+        userName = (EditText) findViewById(R.id.etFName);
+        passwordName = (EditText) findViewById(R.id.etPassword);
+        userEmail = (EditText) findViewById(R.id.etEmail);
+        userLastName = (EditText) findViewById(R.id.etLName);
 
+        User newUser = new User(userName.getText().toString(), userLastName.getText().toString(), userEmail.getText().toString(), passwordName.getText().toString(), "client");
+
+        editor.putString(NAME, newUser.getName() + " " + newUser.getLastName());
+        editor.putString(EMAIL, newUser.getEmail());
+        editor.putString(ROLE, newUser.getRole());
+        editor.commit();
+
+        InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof PostRequestWebServicesConsumer){
+            if((boolean)arg){
+                editor.putBoolean(ACTIVITY_EXECUTED, true);
+                editor.putBoolean(IS_LOGIN, true);
+                editor.commit();
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new PrincipalPage()).commit();
+            }else{
+                Snackbar mySnackbar = Snackbar.make(findViewById(R.id.contenedor), R.string.error_registration, Snackbar.LENGTH_SHORT);
+                mySnackbar.show();
+            }
+        }
     }
 }

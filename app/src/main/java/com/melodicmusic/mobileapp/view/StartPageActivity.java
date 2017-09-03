@@ -28,8 +28,8 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
         sharedPreferences = getSharedPreferences(LOGIN_SAVED_PREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        editor.putBoolean(ACTIVITY_EXECUTED, false);
-        editor.commit();
+        //editor.putBoolean(ACTIVITY_EXECUTED, false);
+        //editor.commit();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
