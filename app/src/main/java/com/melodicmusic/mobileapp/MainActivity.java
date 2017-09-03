@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.melodicmusic.mobileapp.controller.WebServicesConsumer;
 import com.melodicmusic.mobileapp.utility.IConstants;
 import com.melodicmusic.mobileapp.view.CreateAcountFragment;
 import com.melodicmusic.mobileapp.view.LoginFragment;
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private WebServicesConsumer web;
+
+    //View's components
+    private EditText userName, passwordName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity
 
         sharedPreferences = getSharedPreferences(LOGIN_SAVED_PREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        web = new WebServicesConsumer();
 
         if(sharedPreferences.getInt(SELECT_FORM_ENTER, 1) == 1){
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new LoginFragment()).commit();
@@ -176,7 +183,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void loginBtnAction(View view){
+        userName = (EditText) findViewById(R.id.etUsername);
+        passwordName = (EditText) findViewById(R.id.etPassword);
 
+        web.requestContent(URI_LOGIN, userName.getText() + "/" + passwordName.getText());
     }
 
     public void createAcountBtnAction(View view){

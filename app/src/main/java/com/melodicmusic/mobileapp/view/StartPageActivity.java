@@ -3,6 +3,7 @@ package com.melodicmusic.mobileapp.view;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +19,6 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
     private Button noLoginBtn, loginBtn, createAcount;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private WebServicesConsumer web;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,10 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
 
         editor.putBoolean(ACTIVITY_EXECUTED, false);
         editor.commit();
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         if(sharedPreferences.getBoolean(ACTIVITY_EXECUTED, true)){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -43,8 +47,6 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
             loginBtn.setOnClickListener(this);
             createAcount.setOnClickListener(this);
         }
-
-
     }
 
     @Override

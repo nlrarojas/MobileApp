@@ -12,4 +12,7 @@ public interface IConstants {
     public static String ACTIVITY_EXECUTED = "activity_activated";
     public static String IS_LOGIN = "login";
     public static String SELECT_FORM_ENTER = "start_app";
+
+    public static String URI = "http://melodicmusicserver-env.us-west-2.elasticbeanstalk.com/";
+    public static String URI_LOGIN = "api/User/LogIn/";
 }
