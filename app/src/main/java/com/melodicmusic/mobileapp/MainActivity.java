@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.melodicmusic.mobileapp.controller.CentralBankWebServicesConsumer;
 import com.melodicmusic.mobileapp.controller.PostRequestWebServicesConsumer;
 import com.melodicmusic.mobileapp.controller.WebServicesConsumer;
 import com.melodicmusic.mobileapp.model.User;
@@ -31,6 +32,7 @@ import com.melodicmusic.mobileapp.view.SearchFragment;
 import com.melodicmusic.mobileapp.view.StartPageActivity;
 import com.melodicmusic.pruebas.R;
 
+import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private WebServicesConsumer web;
-
+    private double dolarExchangeColon;
     //View's components
     private EditText userName, passwordName, userLastName, userEmail;
 
@@ -66,6 +68,12 @@ public class MainActivity extends AppCompatActivity
         editor = sharedPreferences.edit();
 
         web = new WebServicesConsumer(this);
+
+        Calendar calendar = Calendar.getInstance();
+        String date = calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR);
+        CentralBankWebServicesConsumer consumer = new CentralBankWebServicesConsumer(date, date);
+        consumer.addObserver(this);
+        consumer.run();
 
         if(sharedPreferences.getBoolean(IS_LOGIN, true)) {
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new PrincipalPage()).commit();
@@ -249,6 +257,16 @@ public class MainActivity extends AppCompatActivity
                 Snackbar mySnackbar = Snackbar.make(findViewById(R.id.contenedor), R.string.error_registration, Snackbar.LENGTH_SHORT);
                 mySnackbar.show();
             }
+        } else if (o instanceof CentralBankWebServicesConsumer){
+            dolarExchangeColon = Double.parseDouble(arg.toString());
         }
+    }
+
+    public double getDolarExchangeColon() {
+        return dolarExchangeColon;
+    }
+
+    public void setDolarExchangeColon(double dolarExchangeColon) {
+        this.dolarExchangeColon = dolarExchangeColon;
     }
 }

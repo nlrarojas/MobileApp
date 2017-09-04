@@ -10,9 +10,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.melodicmusic.mobileapp.MainActivity;
+import com.melodicmusic.mobileapp.controller.CentralBankWebServicesConsumer;
 import com.melodicmusic.mobileapp.controller.WebServicesConsumer;
 import com.melodicmusic.pruebas.R;
 import com.melodicmusic.mobileapp.utility.IConstants;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class StartPageActivity extends AppCompatActivity implements View.OnClickListener, IConstants{
 

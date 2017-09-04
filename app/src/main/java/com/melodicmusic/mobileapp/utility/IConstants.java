@@ -21,4 +21,25 @@ public interface IConstants {
     public static String URI = "http://melodicmusicserver-env.us-west-2.elasticbeanstalk.com/";
     public static String URI_LOGIN = "api/User/LogIn/";
     public static String URI_INSERT_USER = "api/User/";
+
+    public static String NAME_SPACE = "http://ws.sdde.bccr.fi.cr";
+    public static String URL_CENTRAL_BANK = "http://indicadoreseconomicos.bccr.fi.cr/indicadoreseconomicos/WebServices/wsIndicadoresEconomicos.asmx";
+    public static String METHOD_NAME = "ObtenerIndicadoresEconomicos";
+    public static String SOAP_ACTION = "http://ws.sdde.bccr.fi.cr/ObtenerIndicadoresEconomicos";
+
+    public static String TC_INDICADOR = "tcIndicador";
+    public static String TC_FECHA_INICIO = "tcFechaInicio";
+    public static String TC_FECHA_FIN = "tcFechaFinal";
+    public static String TC_NOMBRE = "tcNombre";
+    public static String TC_SUB_NIVELES = "tnSubNiveles";
+
+    public static String INDICADOR = "317";
+    public static String TC_NAME = "Nelson";
+    public static String SUB_LEVELS = "N";
+
+    public static String PROPERTY_WS_BANCK_1 = "ObtenerIndicadoresEconomicosResult";
+    public static String PROPERTY_WS_BANCK_2 = "diffgram";
+    public static String PROPERTY_WS_BANCK_3 = "Datos_de_INGC011_CAT_INDICADORECONOMIC";
+    public static String PROPERTY_WS_BANCK_4 = "INGC011_CAT_INDICADORECONOMIC";
+    public static String PROPERTY_WS_BANCK_5 = "NUM_VALOR";
 }

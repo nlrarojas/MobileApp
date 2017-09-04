@@ -41,7 +41,6 @@ public class WebServicesConsumer  implements IConstants{
         InputStream instream = null;
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            String result = null;
             HttpGet httpget = new HttpGet(URI + URIAppend + values);
             HttpResponse response;
 
@@ -96,7 +95,6 @@ public class WebServicesConsumer  implements IConstants{
             userJSONObject.put(EMAIL, user.getEmail());
             userJSONObject.put(PASSWORD, user.getPassword());
             userJSONObject.put(ROLE, user.getRole());
-            System.out.println("JSON Object creado");
             postSender = new PostRequestWebServicesConsumer(userJSONObject);
             postSender.addObserver((Observer) mainActivity);
             postSender.run();
