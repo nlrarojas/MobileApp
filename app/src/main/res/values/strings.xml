@@ -12,6 +12,6 @@
     <string name="error_login">El nombre de usuario o contraseña son incorrectos</string>
     <string name="error_registration">No se pudo registrar el nuevo usuario</string>
 
-    <item name="visible" type="id"/>
-    <item name="masked" type="id"/>
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
 </resources>

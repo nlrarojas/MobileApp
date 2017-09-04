@@ -30,6 +30,7 @@ import com.melodicmusic.mobileapp.view.NoLoginStartPageFragment;
 import com.melodicmusic.mobileapp.view.PrincipalPage;
 import com.melodicmusic.mobileapp.view.SearchFragment;
 import com.melodicmusic.mobileapp.view.StartPageActivity;
+import com.melodicmusic.mobileapp.view.UpdateAcountFragment;
 import com.melodicmusic.pruebas.R;
 
 import java.util.Calendar;
@@ -39,7 +40,8 @@ import java.util.Observer;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoLoginStartPageFragment.OnFragmentInteractionListener,
         PrincipalPage.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener,
-        LoginFragment.OnFragmentInteractionListener, CreateAcountFragment.OnFragmentInteractionListener, IConstants, Observer {
+        LoginFragment.OnFragmentInteractionListener, CreateAcountFragment.OnFragmentInteractionListener, UpdateAcountFragment.OnFragmentInteractionListener
+        ,IConstants, Observer {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -84,6 +86,8 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new CreateAcountFragment()).commit();
             } else if (sharedPreferences.getInt(SELECT_FORM_ENTER, 3) == 3) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new NoLoginStartPageFragment()).commit();
+            } else if (sharedPreferences.getInt(SELECT_FORM_ENTER, 4) == 4){
+                getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new UpdateAcountFragment()).commit();
             }
         }
     }
@@ -238,6 +242,20 @@ public class MainActivity extends AppCompatActivity
         editor.putString(NAME, newUser.getName() + " " + newUser.getLastName());
         editor.putString(EMAIL, newUser.getEmail());
         editor.putString(ROLE, newUser.getRole());
+        editor.commit();
+
+        InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public void updateAcountBtnAction(View view){
+        passwordName = (EditText) findViewById(R.id.etPassword);
+        userEmail = (EditText) findViewById(R.id.etEmail);
+
+        User newUser = new User(userEmail.getText().toString(), passwordName.getText().toString(), "client");
+
+        editor.putString(EMAIL, newUser.getEmail());
+        editor.putString(PASSWORD, newUser.getPassword());
         editor.commit();
 
         InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
