@@ -51,7 +51,9 @@
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:src="@drawable/cart2"
-                    android:tint="@android:color/white" />
+                    android:tint="@android:color/white"
+                    android:onClick="goToShoppingCart"
+                    android:clickable="true"/>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 

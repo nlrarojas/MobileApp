@@ -49,15 +49,12 @@ import com.melodicmusic.mobileapp.view.UpdateAcountFragment;
 import com.melodicmusic.pruebas.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Queue;
-import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoLoginStartPageFragment.OnFragmentInteractionListener,
@@ -242,7 +239,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new CatalogueFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
         } else if (id == R.id.nav_shopping_cart) {
-
+            callShoppingCart();
         } else if (id == R.id.nav_acount) {
             updateAccount();
         }
@@ -611,6 +608,7 @@ public class MainActivity extends AppCompatActivity
     public void addToShoppingCart(View view){
         shoppingCart.add(currentProduct);
         System.out.println(currentProduct.toString());
+        showMessage(R.string.product_added);
     }
 
     public void onClickImageProduct(Product product){
@@ -631,6 +629,35 @@ public class MainActivity extends AppCompatActivity
         productDescription.setText(product.getDescription());
         productBrand.setText("Marca: " + product.getBrand());
         currentProduct = product;
+    }
+
+    public void callShoppingCart(){
+        Fragment fr = new AllProductsFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fr).commit();
+        getSupportFragmentManager().executePendingTransactions();
+
+        productList = (ListView) findViewById(R.id.listViewProducts);
+
+        final AdapterListView adapterProducts = new AdapterListView(shoppingCart, this, dolarExchangeColon, fr);
+        adapterProducts.setShoppingCartDisplayed(true);
+        adapterProducts.setShoppingCart(shoppingCart);
+        adapterProducts.setUserId(userID);
+        productList.setAdapter(adapterProducts);
+        productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    Product product = (Product) adapterProducts.getItem(position);
+                    onClickImageProduct(product);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+    }
+
+    public void goToShoppingCart(View view){
+        callShoppingCart();
     }
 
     public double getDolarExchangeColon() {

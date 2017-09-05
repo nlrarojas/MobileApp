@@ -113,7 +113,6 @@ public class WebServicesConsumer extends Observable implements IConstants{
         }
     }
 
-
     public boolean updateUser(User user){
         JSONObject userJSONObject = new JSONObject();
         try {
