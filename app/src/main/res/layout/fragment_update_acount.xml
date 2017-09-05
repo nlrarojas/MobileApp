@@ -1,0 +1,120 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.melodicmusic.mobileapp.view.UpdateAcountFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#a00d17"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/etFName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apellidos"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/etLName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correo electrónico"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/etEmail2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:inputType="textEmailAddress|text"
+                android:backgroundTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:focusable="false"
+                android:enabled="false"
+                android:textAlignment="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contraseña"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/etPasswordLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etPassword2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/white"
+                    android:textColor="@android:color/white"
+                    android:inputType="textPassword"
+                    android:textAlignment="center"/>
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de tarjeta"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:paddingTop="10dp" />
+            <EditText
+                android:id="@+id/etCarnNumber2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:inputType="textEmailAddress|text"
+                android:backgroundTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FBA919"
+                android:clickable="true"
+                android:onClick="updateAcountBtnAction"
+                android:text="Actualizar"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

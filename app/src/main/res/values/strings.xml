@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Pruebas</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_log_in">No ha iniciado sesión</string>
+    <string name="error_login">El nombre de usuario o contraseña son incorrectos</string>
+    <string name="error_registration">No se pudo registrar el nuevo usuario</string>
+    <string name="error_search">No se encontraron resultados</string>
+    <string name="error_prices">El rango de los precios es incorrecto</string>
+    <string name="exit_message">Presione de nuevo para salir</string>
+    <string name="error_updating">No se pudo actulizar los datos</string>
+    <string name="product_added">Producto añadido al carrito</string>
+
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
+</resources>
