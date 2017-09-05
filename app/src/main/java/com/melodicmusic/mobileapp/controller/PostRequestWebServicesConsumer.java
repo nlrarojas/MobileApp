@@ -28,11 +28,9 @@ public class PostRequestWebServicesConsumer extends Observable implements Runnab
     public void run() {
         String sb = "";
         HttpURLConnection httpURLConnection = null;
-        System.out.println("Iniciando envio");
         try {
             URL url = new URL(URI + URI_INSERT_USER); //Enter URL here
             httpURLConnection = (HttpURLConnection)url.openConnection();
-            System.out.println("Abriendo conexión");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod("POST"); // here you are telling that it is a POST request, which can be changed into "PUT", "GET", "DELETE" etc.
             httpURLConnection.setRequestProperty("Content-Type", "application/json"); // here you are setting the `Content-Type` for the data you are sending which is `application/json`
@@ -53,11 +51,9 @@ public class PostRequestWebServicesConsumer extends Observable implements Runnab
                 }
                 br.close();
 
-                System.out.println(" "+ sb);
                 setChanged();
                 notifyObservers(true);
             }else{
-                System.out.println(httpURLConnection.getResponseMessage());
                 setChanged();
                 notifyObservers(false);
             }

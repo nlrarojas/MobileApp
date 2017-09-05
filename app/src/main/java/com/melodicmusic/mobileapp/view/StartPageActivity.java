@@ -42,7 +42,7 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
         if(sharedPreferences.getBoolean(ACTIVITY_EXECUTED, true)){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            finish();
+            //finish();
         }else {
             noLoginBtn = (Button) findViewById(R.id.noLoginBtn);
             loginBtn = (Button) findViewById(R.id.loginBtn);

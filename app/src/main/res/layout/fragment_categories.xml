@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.melodicmusic.mobileapp.view.CatalogueFragment">
-
+    tools:context="com.melodicmusic.mobileapp.view.CategoriesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,48 +21,61 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:text="Buscar productos por"
+                android:text="Categorías"
                 android:textSize="20sp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"/>
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/windCategoryBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lista General"
+                android:text="Viento"
                 android:textColor="@android:color/white"
                 android:textAllCaps="false"
                 android:background="#a00d17"
-                android:onClick="getAllProducts"
+                android:onClick="getAllWindProducts"
                 android:clickable="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/stringCategoryBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Categorías"
+                android:text="Cuerdas"
                 android:textColor="@android:color/white"
                 android:textAllCaps="false"
                 android:background="#a00d17"
-                android:onClick="getProductsByCategories"
+                android:onClick="getAllStringProducts"
                 android:clickable="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/percussionCategoryBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Precio"
+                android:text="Percusion"
                 android:textColor="@android:color/white"
                 android:textAllCaps="false"
                 android:background="#a00d17"
-                android:onClick="getProductByPrice"
+                android:onClick="getAllPercussionProducts"
+                android:clickable="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+            <Button
+                android:id="@+id/electricCategoryBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Electricos"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"
+                android:background="#a00d17"
+                android:onClick="getAllElectricsProducts"
                 android:clickable="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
         </LinearLayout>
     </LinearLayout>
+
 </FrameLayout>

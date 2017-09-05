@@ -21,6 +21,10 @@ public interface IConstants {
     public static String URI = "http://melodicmusicserver-env.us-west-2.elasticbeanstalk.com/";
     public static String URI_LOGIN = "api/User/LogIn/";
     public static String URI_INSERT_USER = "api/User/";
+    public static String URI_GET_ALL_PRODUCTS = "api/Product/";
+    public static String URI_PRODUCTS_BY_PRICE = "api/Product/getProductsByPrice/";
+    public static String URI_PRODUCTS_BY_CATEGORY = "api/Product/getProductsByCategory/";
+    public static String URI_PRODUCTS_BY_NAME = "api/Product/getProductsByName/";
 
     public static String NAME_SPACE = "http://ws.sdde.bccr.fi.cr";
     public static String URL_CENTRAL_BANK = "http://indicadoreseconomicos.bccr.fi.cr/indicadoreseconomicos/WebServices/wsIndicadoresEconomicos.asmx";
@@ -42,4 +46,9 @@ public interface IConstants {
     public static String PROPERTY_WS_BANCK_3 = "Datos_de_INGC011_CAT_INDICADORECONOMIC";
     public static String PROPERTY_WS_BANCK_4 = "INGC011_CAT_INDICADORECONOMIC";
     public static String PROPERTY_WS_BANCK_5 = "NUM_VALOR";
+
+    public static String WIND_CATEGORY = "Viento";
+    public static String STRING_CATEGORY = "Cuerda";
+    public static String PERCUSION_CATEGORY = "Percusion";
+    public static String ELECTRIC_CATEGORY = "Electricos";
 }

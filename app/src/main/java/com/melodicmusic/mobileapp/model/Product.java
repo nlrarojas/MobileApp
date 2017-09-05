@@ -6,19 +6,21 @@ package com.melodicmusic.mobileapp.model;
 
 public class Product {
     private String id;
-    private String brand;
-    private String category;
-    private String description;
     private String name;
     private double price;
+    private String category;
+    private String brand;
+    private String description;
+    private String imageUrl;
 
-    public Product(String id, String brand, String category, String description, String name, double price) {
+    public Product(String id, String name, double price, String category, String brand, String description, String imageUrl) {
         this.id = id;
-        this.brand = brand;
-        this.category = category;
-        this.description = description;
         this.name = name;
         this.price = price;
+        this.category = category;
+        this.brand = brand;
+        this.description = description;
+        this.imageUrl = imageUrl;
     }
 
     public String getId() {
@@ -67,6 +69,14 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

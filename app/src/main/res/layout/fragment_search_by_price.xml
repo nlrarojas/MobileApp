@@ -1,0 +1,75 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.melodicmusic.mobileapp.view.SearchByPriceFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:gravity="top">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="Ingrese los rangos de precio"
+                android:textSize="20sp"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:background="#FFF"
+            android:gravity="top">
+
+            <EditText
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="min"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:id="@+id/minPrice" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="a"
+                android:textColor="@android:color/black"
+                android:textSize="@android:dimen/app_icon_size"/>
+            <EditText
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="max"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:id="@+id/maxPrice" />
+            <ImageButton
+                android:id="@+id/byPriceBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_search"
+                android:backgroundTint="@android:color/white"
+                android:layout_weight="1"
+                android:onClick="getProductByPriceBtnAction"
+                android:clickable="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+        </LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewProductByPrice">
+
+        </ListView>
+    </LinearLayout>
+
+</FrameLayout>

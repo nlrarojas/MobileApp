@@ -2,6 +2,7 @@ package com.melodicmusic.mobileapp.controller;
 
 import android.app.Activity;
 
+import com.melodicmusic.mobileapp.model.Product;
 import com.melodicmusic.mobileapp.model.User;
 import com.melodicmusic.mobileapp.utility.IConstants;
 
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -29,7 +32,7 @@ import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
  * Created by Nelson on 2/9/2017.
  */
 
-public class WebServicesConsumer  implements IConstants{
+public class WebServicesConsumer extends Observable implements IConstants{
     private PostRequestWebServicesConsumer postSender;
     private Activity mainActivity;
 
@@ -63,7 +66,6 @@ public class WebServicesConsumer  implements IConstants{
         InputStream instream = requestContent(URIAppend, values);
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
-            StringBuilder sb = new StringBuilder();
             String queryResult;
 
             queryResult = reader.readLine();
@@ -103,5 +105,125 @@ public class WebServicesConsumer  implements IConstants{
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<Product> getListOfProducts(List<Product> listProducts, String queryResult) {
+        System.out.println(queryResult);
+        try{
+            JSONArray productsArray = new JSONArray(queryResult);
+            for (int i = 0; i < productsArray.length(); i++) {
+                JSONObject productJSON = productsArray.getJSONObject(i);
+                Product product = new Product(productJSON.get("_id").toString(), productJSON.get("name").toString(),
+                        Double.parseDouble(productJSON.get("price").toString()), productJSON.get("category").toString(),
+                        productJSON.get("brand").toString(), productJSON.get("description").toString(), productJSON.get("imageUrl").toString());
+                listProducts.add(product);
+            }
+            return listProducts;
+        } catch (JSONException e){
+            this.addObserver((Observer) mainActivity);
+            setChanged();
+            notifyObservers(false);
+        }
+        return listProducts;
+    }
+
+    public List<Product> getAllProducts(){
+        InputStream instream = requestContent(URI_GET_ALL_PRODUCTS, "");
+        List<Product> listProducts = new LinkedList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
+            String queryResult;
+
+            queryResult = reader.readLine();
+            listProducts = getListOfProducts(listProducts, queryResult);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (instream != null) {
+                try {
+                    instream.close();
+                } catch (Exception exc) {
+
+                }
+            }
+        }
+        return listProducts;
+    }
+
+    public List<Product> getProductsByCategory(String category){
+        InputStream instream = requestContent(URI_PRODUCTS_BY_CATEGORY, category);
+        List<Product> listProducts = new LinkedList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
+            String queryResult;
+
+            queryResult = reader.readLine();
+            listProducts = getListOfProducts(listProducts, queryResult);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (instream != null) {
+                try {
+                    instream.close();
+                } catch (Exception exc) {
+
+                }
+            }
+        }
+        return listProducts;
+    }
+
+    public List<Product> getProductsByPrice(String lowerPrice, String higherPrice){
+        InputStream instream = requestContent(URI_PRODUCTS_BY_PRICE, lowerPrice + "/" + higherPrice);
+        List<Product> listProducts = new LinkedList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
+            String queryResult;
+
+            queryResult = reader.readLine();
+            listProducts = getListOfProducts(listProducts, queryResult);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (instream != null) {
+                try {
+                    instream.close();
+                } catch (Exception exc) {
+
+                }
+            }
+        }
+        return listProducts;
+    }
+
+    public List<Product> getProductsByName(String productName){
+        InputStream instream = requestContent(URI_PRODUCTS_BY_NAME, productName);
+        List<Product> listProducts = new LinkedList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
+            String queryResult;
+
+            queryResult = reader.readLine();
+            listProducts = getListOfProducts(listProducts, queryResult);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (instream != null) {
+                try {
+                    instream.close();
+                } catch (Exception exc) {
+
+                }
+            }
+        }
+        return listProducts;
     }
 }

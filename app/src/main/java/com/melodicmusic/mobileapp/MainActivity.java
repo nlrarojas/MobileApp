@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,29 +19,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 
+import com.melodicmusic.mobileapp.controller.AdapterListView;
 import com.melodicmusic.mobileapp.controller.CentralBankWebServicesConsumer;
 import com.melodicmusic.mobileapp.controller.PostRequestWebServicesConsumer;
 import com.melodicmusic.mobileapp.controller.WebServicesConsumer;
+import com.melodicmusic.mobileapp.model.Product;
 import com.melodicmusic.mobileapp.model.User;
 import com.melodicmusic.mobileapp.utility.IConstants;
+import com.melodicmusic.mobileapp.view.CatalogueFragment;
+import com.melodicmusic.mobileapp.view.CategoriesFragment;
 import com.melodicmusic.mobileapp.view.CreateAcountFragment;
 import com.melodicmusic.mobileapp.view.LoginFragment;
 import com.melodicmusic.mobileapp.view.NoLoginStartPageFragment;
 import com.melodicmusic.mobileapp.view.PrincipalPage;
+import com.melodicmusic.mobileapp.view.SearchByPriceFragment;
 import com.melodicmusic.mobileapp.view.SearchFragment;
 import com.melodicmusic.mobileapp.view.StartPageActivity;
 import com.melodicmusic.pruebas.R;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NoLoginStartPageFragment.OnFragmentInteractionListener,
         PrincipalPage.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener,
-        LoginFragment.OnFragmentInteractionListener, CreateAcountFragment.OnFragmentInteractionListener, IConstants, Observer {
+        LoginFragment.OnFragmentInteractionListener, CreateAcountFragment.OnFragmentInteractionListener,
+        CatalogueFragment.OnFragmentInteractionListener, CategoriesFragment.OnFragmentInteractionListener,
+        SearchByPriceFragment.OnFragmentInteractionListener, IConstants, Observer {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -47,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     private double dolarExchangeColon;
     //View's components
     private EditText userName, passwordName, userLastName, userEmail;
+    private ListView productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +88,8 @@ public class MainActivity extends AppCompatActivity
         consumer.addObserver(this);
         consumer.run();
 
+        getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+
         if(sharedPreferences.getBoolean(IS_LOGIN, true)) {
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new PrincipalPage()).commit();
         } else {
@@ -94,7 +109,22 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+
+            InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        System.out.println(getSupportFragmentManager().getBackStackEntryCount());
+        if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+            System.out.println(1);
+            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().executePendingTransactions();
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                finishAfterTransition();
+            } else {
+                finish();
+            }
         }
     }
 
@@ -111,6 +141,9 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -141,6 +174,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
         Fragment fragment = null;
         if(id == R.id.nav_home){
             if(sharedPreferences.getBoolean(IS_LOGIN, true)){
@@ -150,8 +187,8 @@ public class MainActivity extends AppCompatActivity
             }
         } else if (id == R.id.nav_search) {
             fragment = new SearchFragment();
-        } else if (id == R.id.nav_categories) {
-
+        } else if (id == R.id.nav_catalogue) {
+            fragment = new CatalogueFragment();
         } else if (id == R.id.nav_shopping_cart){
 
         } else if (id == R.id.nav_share) {
@@ -172,8 +209,7 @@ public class MainActivity extends AppCompatActivity
 
     //Funciones de los buttons
     public void searchBtnActivity(View view){
-        Fragment fragment = new SearchFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new SearchFragment()).commit();
     }
 
     public void searchBtnAction(View view){
@@ -183,15 +219,65 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getAllProducts(View view){
-
+        web.getAllProducts();
     }
 
     public void getProductsByCategories(View view){
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new CategoriesFragment()).commit();
     }
 
-    public void getProductsByBrand(View view){
+    public void getAllStringProducts(View view){
+        web.getProductsByCategory(STRING_CATEGORY);
+    }
 
+    public void getAllWindProducts(View view){
+        web.getProductsByCategory(WIND_CATEGORY);
+    }
+
+    public void getAllElectricsProducts(View view){
+        web.getProductsByCategory(ELECTRIC_CATEGORY);
+    }
+
+    public void getAllPercussionProducts(View view){
+        web.getProductsByCategory(PERCUSION_CATEGORY);
+    }
+
+    public void getProductByPrice (View view){
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new SearchByPriceFragment()).commit();
+    }
+
+    public void getProductByPriceBtnAction(View view){
+        EditText lowerPrice = (EditText) findViewById(R.id.minPrice);
+        EditText higherPrice = (EditText) findViewById(R.id.maxPrice);
+
+        int lowerPriceValue = Integer.parseInt(lowerPrice.getText().toString());
+        int higherPriceValue = Integer.parseInt(higherPrice.getText().toString());
+
+        System.out.println("Min: " + lowerPriceValue + " max: " + higherPriceValue);
+        if(lowerPriceValue > higherPriceValue){
+            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.contenedor), R.string.error_prices, Snackbar.LENGTH_SHORT);
+            mySnackbar.show();
+        } else {
+            List<Product> products = web.getProductsByPrice(lowerPriceValue + "", higherPriceValue + "");
+            productList = (ListView) findViewById(R.id.listViewProductByPrice);
+
+            final AdapterListView adapter = new AdapterListView(products, this, dolarExchangeColon);
+            productList.setAdapter(adapter);
+            productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    try{
+                        Product product = (Product) adapter.getItem(position);
+                        System.out.println(product.getId());
+                    } catch (Exception e){
+
+                    }
+                }
+            });
+        }
+
+        InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     public void loginBtnRedirect(View v){
@@ -233,6 +319,7 @@ public class MainActivity extends AppCompatActivity
         userLastName = (EditText) findViewById(R.id.etLName);
 
         User newUser = new User(userName.getText().toString(), userLastName.getText().toString(), userEmail.getText().toString(), passwordName.getText().toString(), "client");
+        web.registerUser(newUser);
 
         editor.putString(USER_ID, newUser.getId());
         editor.putString(NAME, newUser.getName() + " " + newUser.getLastName());
@@ -259,6 +346,14 @@ public class MainActivity extends AppCompatActivity
             }
         } else if (o instanceof CentralBankWebServicesConsumer){
             dolarExchangeColon = Double.parseDouble(arg.toString());
+        } else if (o instanceof WebServicesConsumer){
+            if(!(boolean) arg){
+                InputMethodManager inputMethodManager =  (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                Snackbar mySnackbar = Snackbar.make(findViewById(R.id.contenedor), R.string.error_search, Snackbar.LENGTH_SHORT);
+                mySnackbar.show();
+            }
         }
     }
 

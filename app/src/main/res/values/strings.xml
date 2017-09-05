@@ -11,7 +11,9 @@
     <string name="no_log_in">No ha iniciado sesión</string>
     <string name="error_login">El nombre de usuario o contraseña son incorrectos</string>
     <string name="error_registration">No se pudo registrar el nuevo usuario</string>
+    <string name="error_search">No se encontraron resultados</string>
+    <string name="error_prices">El rango de los precios es incorrecto</string>
 
-    <item name="visible" type="id"/>
-    <item name="masked" type="id"/>
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
 </resources>

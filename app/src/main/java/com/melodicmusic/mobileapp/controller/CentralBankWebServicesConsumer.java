@@ -31,8 +31,6 @@ public class CentralBankWebServicesConsumer extends Observable implements IConst
 
     @Override
     public void run() {
-        String result;
-
         SoapObject request = new SoapObject(NAME_SPACE, METHOD_NAME);
         request.addProperty(TC_INDICADOR, INDICADOR);
         request.addProperty(TC_FECHA_INICIO, startDate);
@@ -48,8 +46,8 @@ public class CentralBankWebServicesConsumer extends Observable implements IConst
             transportSE.call(SOAP_ACTION, envelope);
 
             SoapObject result_XML = (SoapObject) envelope.bodyIn;
-            SoapObject outterBody = (SoapObject) result_XML.getProperty(PROPERTY_WS_BANCK_1);
-            SoapObject diffGram = (SoapObject) outterBody.getProperty(PROPERTY_WS_BANCK_2);
+            SoapObject outerBody = (SoapObject) result_XML.getProperty(PROPERTY_WS_BANCK_1);
+            SoapObject diffGram = (SoapObject) outerBody.getProperty(PROPERTY_WS_BANCK_2);
             SoapObject innerDifferGram = (SoapObject) diffGram.getProperty(PROPERTY_WS_BANCK_3);
             SoapObject indicators = (SoapObject) innerDifferGram.getProperty(PROPERTY_WS_BANCK_4);
             SoapPrimitive exchangeValue = (SoapPrimitive) indicators.getProperty(PROPERTY_WS_BANCK_5);
