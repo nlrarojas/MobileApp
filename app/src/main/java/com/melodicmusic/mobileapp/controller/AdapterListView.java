@@ -52,17 +52,17 @@ public class AdapterListView extends BaseAdapter {
         }
 
         TextView productName = (TextView) convertView.findViewById(R.id.textViewName);
-        TextView productDolarPrice = (TextView) convertView.findViewById(R.id.textViewDolarPrice);
+        TextView productDollarPrice = (TextView) convertView.findViewById(R.id.textViewDolarPrice);
         TextView productColonPrice = (TextView) convertView.findViewById(R.id.textViewColonPrice);
         ImageView productImage = (ImageView) convertView.findViewById(R.id.imageViewProduct);
-        TextView productDescripcion = (TextView) convertView.findViewById(R.id.textViewDescription);
+        TextView productDescription = (TextView) convertView.findViewById(R.id.textViewDescription);
         TextView productBrand = (TextView) convertView.findViewById(R.id.textViewBrand);
 
         productName.setText(products.get(position).getName());
-        productDolarPrice.setText(String.format( "$ %.2f",(products.get(position).getPrice() / dolarExchange)));
+        productDollarPrice.setText(String.format( "$ %.2f",(products.get(position).getPrice() / dolarExchange)));
         productColonPrice.setText(String.format( "¢ %.2f",(products.get(position).getPrice())));
         Picasso.with(context).load(products.get(position).getImageUrl()).into(productImage);
-        productDescripcion.setText(products.get(position).getDescription());
+        productDescription.setText(products.get(position).getDescription());
         productBrand.setText("Marca: " + products.get(position).getBrand());
         return convertView;
     }

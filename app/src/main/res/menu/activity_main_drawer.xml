@@ -23,10 +23,6 @@
     <item android:title="">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Compartir" />
-            <item
                 android:id="@+id/nav_acount"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="Cuenta" />

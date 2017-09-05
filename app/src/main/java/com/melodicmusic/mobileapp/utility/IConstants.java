@@ -13,6 +13,8 @@ public interface IConstants {
     public static String EMAIL = "email";
     public static String PASSWORD = "password";
     public static String ROLE = "role";
+    public static String CARD_NUMBER = "cardNumber";
+    public static String CLIENT_ROLE = "client";
 
     public static String SELECT_FORM_ENTER = "start_app";
     public static String ACTIVITY_EXECUTED = "activity_activated";
@@ -21,6 +23,7 @@ public interface IConstants {
     public static String URI = "http://melodicmusicserver-env.us-west-2.elasticbeanstalk.com/";
     public static String URI_LOGIN = "api/User/LogIn/";
     public static String URI_INSERT_USER = "api/User/";
+    public static String URI_UPDATE_USER = "/api/User/";
     public static String URI_GET_ALL_PRODUCTS = "api/Product/";
     public static String URI_PRODUCTS_BY_PRICE = "api/Product/getProductsByPrice/";
     public static String URI_PRODUCTS_BY_CATEGORY = "api/Product/getProductsByCategory/";
@@ -51,4 +54,7 @@ public interface IConstants {
     public static String STRING_CATEGORY = "Cuerda";
     public static String PERCUSION_CATEGORY = "Percusion";
     public static String ELECTRIC_CATEGORY = "Electricos";
+    public static String OTHER_CATEGORY = "Otro";
+
+    public static String ERROR_LOGIN_AUTENTICATION = "error_login_autentication";
 }

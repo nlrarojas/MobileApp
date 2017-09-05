@@ -39,6 +39,8 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:paddingTop="20dp"
+                    android:onClick="getAllWindProducts"
+                    android:clickable="true"
                     android:src="@drawable/viento" />
 
                 <TextView
@@ -80,6 +82,8 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:paddingTop="20dp"
+                    android:onClick="getAllStringProducts"
+                    android:clickable="true"
                     android:src="@drawable/violin" />
 
                 <TextView
@@ -121,6 +125,8 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:paddingTop="20dp"
+                    android:onClick="getAllPercussionProducts"
+                    android:clickable="true"
                     android:src="@drawable/percusion" />
 
                 <TextView
@@ -162,6 +168,8 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:paddingTop="20dp"
+                    android:onClick="getAllElectricsProducts"
+                    android:clickable="true"
                     android:src="@drawable/electricas" />
 
                 <TextView

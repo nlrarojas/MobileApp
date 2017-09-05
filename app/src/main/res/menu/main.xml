@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="Ajustes"
+        android:title="Cuenta"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_log_out"

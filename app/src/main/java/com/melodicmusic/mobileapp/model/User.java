@@ -11,29 +11,25 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private String cardNumber;
 
-    public User(String id, String name, String lastName, String email, String password, String role) {
+    public User(String id, String name, String lastName, String email, String password, String role, String cardNumber) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.cardNumber = cardNumber;
     }
 
-    public User(String name, String lastName, String email, String password, String role) {
+    public User(String name, String lastName, String email, String password, String role, String cardNumber) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = role;
-    }
-
-    public User(String name, String lastName, String email, String role) {
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.role = role;
+        this.cardNumber = cardNumber;
     }
 
     public String getId() {
@@ -84,6 +80,14 @@ public class User {
         this.role = role;
     }
 
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -91,7 +95,9 @@ public class User {
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
                 '}';
     }
 }

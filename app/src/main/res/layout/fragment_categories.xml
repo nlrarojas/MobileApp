@@ -75,6 +75,18 @@
                 android:clickable="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
+            <Button
+                android:id="@+id/otherCategoryBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Otros"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"
+                android:background="#a00d17"
+                android:onClick="getAllOtherProducts"
+                android:clickable="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
     </LinearLayout>
 

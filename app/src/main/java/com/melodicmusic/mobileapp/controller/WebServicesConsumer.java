@@ -34,6 +34,7 @@ import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
 public class WebServicesConsumer extends Observable implements IConstants{
     private PostRequestWebServicesConsumer postSender;
+    private UserUpdater userUpdater;
     private Activity mainActivity;
 
     public WebServicesConsumer(Activity mainActivity) {
@@ -70,12 +71,16 @@ public class WebServicesConsumer extends Observable implements IConstants{
 
             queryResult = reader.readLine();
             JSONObject user = new JSONObject(queryResult);
-            userFound = new User(user.getString("_id"), user.getString("name"), user.getString("lastName"), user.getString("email"), user.getString("role"));
+            userFound = new User(user.getString("_id"), user.getString("name"), user.getString("lastName"), user.getString("email"),
+                    user.getString("password"),user.getString("role"), user.getString("cardNumber"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            this.addObserver((Observer) mainActivity);
+            setChanged();
+            notifyObservers(ERROR_LOGIN_AUTENTICATION);
             e.printStackTrace();
         } finally {
             if (instream != null) {
@@ -97,9 +102,31 @@ public class WebServicesConsumer extends Observable implements IConstants{
             userJSONObject.put(EMAIL, user.getEmail());
             userJSONObject.put(PASSWORD, user.getPassword());
             userJSONObject.put(ROLE, user.getRole());
+            userJSONObject.put(CARD_NUMBER, user.getCardNumber());
             postSender = new PostRequestWebServicesConsumer(userJSONObject);
             postSender.addObserver((Observer) mainActivity);
             postSender.run();
+            return true;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean updateUser(User user){
+        JSONObject userJSONObject = new JSONObject();
+        try {
+            userJSONObject.put(USER_ID, user.getId());
+            userJSONObject.put(NAME, user.getName());
+            userJSONObject.put(LAST_NAME, user.getLastName());
+            userJSONObject.put(EMAIL, user.getEmail());
+            userJSONObject.put(PASSWORD, user.getPassword());
+            userJSONObject.put(ROLE, user.getRole());
+            userJSONObject.put(CARD_NUMBER, user.getCardNumber());
+            userUpdater = new UserUpdater(userJSONObject, user.getId());
+            userUpdater.addObserver((Observer) mainActivity);
+            userUpdater.run();
             return true;
         } catch (JSONException e) {
             e.printStackTrace();

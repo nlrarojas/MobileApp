@@ -34,7 +34,7 @@ public class StartPageActivity extends AppCompatActivity implements View.OnClick
         editor = sharedPreferences.edit();
 
         //editor.putBoolean(ACTIVITY_EXECUTED, false);
-        //editor.commit();
+        //editor.commit();editor.remove(NAME);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
